@@ -1,0 +1,91 @@
+
+public class Products {
+
+    private static int idNumber = 1;
+    private String name;
+    private int quantitie;
+    private double priceCust;
+    private double priceSell;
+
+    public Products(String name, int quantitie, double priceCust, double priceSell) {
+        this.idNumber++;
+        this.name = name;
+        this.quantitie = quantitie;
+        this.priceCust = priceCust;
+        this.priceSell = priceSell;
+    }
+
+    public Products(String name, double priceCust, double priceSell) {
+        this.idNumber++;
+        this.name = name;
+        this.priceCust = priceCust;
+        this.priceSell = priceSell;
+    }
+
+    public void incraeseCust(double incraeseCust) {
+        this.priceCust = priceCust + incraeseCust;
+    }
+
+    public void decraeseCust(double decraeseCust) {
+        this.priceCust = priceCust - decraeseCust;
+    }
+
+    public void incraeseSell(double incraeseSell) {
+        this.priceSell = priceSell + incraeseSell;
+    }
+
+    public void decraeseSell(double decraeseSell) {
+        this.priceSell = priceSell - decraeseSell;
+    }
+
+    public void increaseStock(int increaseStock) {
+        this.quantitie = quantitie + increaseStock;
+
+    }
+
+    public void decreaseStock(int decreaseStock) {
+        this.quantitie = quantitie + decreaseStock;
+    }
+
+    public static int getIdNumber() {
+        return idNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getQuantitie() {
+        return quantitie;
+    }
+
+    public double getPriceCust() {
+        return priceCust;
+    }
+
+    public double getPriceSell() {
+        return priceSell;
+    }
+
+    public void setPriceCust(double priceCust) {
+        this.priceCust = priceCust;
+    }
+
+    public void setPriceSell(double priceSell) {
+        this.priceSell = priceSell;
+    }
+
+    @Override
+    public String toString() {
+        return "Products{" +
+                "name='" + name + '\'' +
+                ", quantitie=" + quantitie +
+                ", priceCust=" + priceCust +
+                ", priceSell=" + priceSell +
+                '}';
+    }
+}

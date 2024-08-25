@@ -1,0 +1,268 @@
+
+import Entities.Products;
+import Entities.WareHouses;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Progran {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        LocalDate DataDeAgora = LocalDate.now();
+        LocalDateTime horaDeAgora = LocalDateTime.now();
+        Instant DataHorarioLondres = Instant.now();
+        List<Products> lista = new ArrayList<>();
+        List<WareHouses> Armazem = new ArrayList<>();
+
+        int choise;
+        int choiseSubMenu;
+
+        do {
+            System.out.println("1 - Cadastrar produto no Sistema.");
+            System.out.println("2 - Cadastrar produto no Sistema, com entrada de merdadoria.");
+            System.out.println("3 - Visualizar mercadoria(s).");
+            System.out.println("4 - Cadastrar Armazem no Sistema.");
+            System.out.println("5 - Transferir mercadoria(s) para o(s) Armazem(os).");
+            System.out.println("6 - Transferir mercadoria(s) entre o(s) Armazem(os).");
+            System.out.println("7 - Vizualizar Armazem(s).");
+            System.out.println("8 - Adicionar/Remover Produtos.");
+            System.out.println("9 - Editar Preços de Custo e Venda de Mercadoria.");
+            System.out.println("10 - Sair.");
+            System.out.print("Escolha uma opção: ");
+
+            choise = sc.nextInt();
+            while (choise > 10 || choise < 0) {
+                System.out.print("Escolha uma opção valida: ");
+                choise = sc.nextInt();
+            }
+            switch (choise) {
+
+                case 1: {
+                    do {
+                        System.out.println("Cadastre o produto:");
+                        System.out.print("Nome do produto: ");
+                        String name = sc.next();
+                        System.out.print("Custo do produto: ");
+                        double priceCust = sc.nextDouble();
+                        System.out.print("Preço de venda do produto: ");
+                        double priceSell = sc.nextDouble();
+
+                        Products p1 = new Products(name, priceCust, priceSell);
+                        lista.add(p1);
+
+                        System.out.print("Deseja cadastrar outro produto? Caso não digite 1 : ");
+                        choiseSubMenu = sc.nextInt();
+                    } while (choiseSubMenu != 1);
+                    break;
+                }
+
+                case 2: {
+
+                    do {
+                        System.out.println("Cadastre o produto:");
+                        System.out.print("Nome do produto: ");
+                        String name = sc.next();
+                        System.out.print("Quantidade do produto: ");
+                        int quantitie = sc.nextInt();
+                        System.out.print("Custo do produto: ");
+                        double priceCust = sc.nextDouble();
+                        System.out.print("Preço de venda do produto: ");
+                        double priceSell = sc.nextDouble();
+
+                        Products p2 = new Products(name, quantitie, priceCust, priceSell);
+                        lista.add(p2);
+
+                        System.out.print("Deseja cadastrar outro produto? Caso não digite 1 : ");
+                        choiseSubMenu = sc.nextInt();
+                    } while (choiseSubMenu != 1);
+                    break;
+                }
+
+                case 3: {
+                    do {
+                        for (int i = 0; i < lista.size(); i++) {
+                            System.out.println("Esses são os menbros da lista: ");
+                            System.out.println(i + " - " + lista.get(i).getName());
+                        }
+                        System.out.println("Ver detalhadamente Produto da lista: ");
+                        int choiseproduct = sc.nextInt();
+                        for (int i = 0; i < lista.size(); i++) {
+                            if (i == choiseproduct) {
+                                System.out.println("O id do produto é: " + lista.get(i).getIdNumber());
+                                System.out.println("Nome: " + lista.get(i).getName());
+                                System.out.println("Quantidade fora de um armazem: " + lista.get(i).getQuantitie() + "und(s)");
+                                System.out.println("O valor de custo desse produto: " + lista.get(i).getPriceCust());
+                                System.out.println("O valor de venda desse produto: " + lista.get(i).getPriceSell());
+
+
+                                System.out.print("Deseja voltrar ao menu? Caso queira ver novamente digite 1 : ");
+                                choiseSubMenu = sc.nextInt();
+                            }
+                        }
+                        System.out.print("Deseja voltrar ao menu? Caso queira ver novamente digite 1 : ");
+                        choiseSubMenu = sc.nextInt();
+                    } while (choiseSubMenu != 1);
+
+                    break;
+                }
+
+                case 4: {
+                    do {
+                        System.out.println("Cadastre o Armazem:");
+                        System.out.print("Codinome do Armazem: ");
+                        String codiname = sc.next();
+
+                        WareHouses A1 = new WareHouses(codiname);
+
+                        Armazem.add(A1);
+
+                        System.out.print("Deseja cadastrar outro Armazem? Caso não digite 1 : ");
+                        choiseSubMenu = sc.nextInt();
+                    } while (choiseSubMenu != 1);
+                    break;
+                }
+
+                case 5: {
+                    do {
+                        System.out.println("Estes são os Armazens Listados: ");
+                        for (int i = 0; i < Armazem.size(); i++) {
+                            System.out.println(" Coninome do Armazem: " + Armazem.get(i).getCodiname() + " | Numero de indentificação: " + Armazem.get(i).getIdNumberWareHause());
+                        }
+                        for (int i = 0; i < lista.size(); i++) {
+                            System.out.println("Esses são os Produto fora de um armazem: ");
+                            System.out.println(i + " - " + lista.get(i).getName());
+                        }
+
+                        System.out.print("Escolha o produto que deseja armazenar: ");
+                        int choiseProdutToStore = sc.nextInt();
+                        for (int i = 0; i < lista.size(); i++) {
+                            if (i == choiseProdutToStore) {
+                                int clonedIdnumber = lista.get(i).getIdNumber();
+                                String nameProduct = lista.get(i).getName();
+                                int quantitieOfStock = lista.get(i).getQuantitie();
+
+                                WareHouses w2 = new WareHouses(clonedIdnumber, nameProduct, quantitieOfStock);
+                            }
+                        }
+                        System.out.print("Deseja fazer a operção novamente? Caso não digite 1 : ");
+                        choiseSubMenu = sc.nextInt();
+                    } while (choiseSubMenu != 1);
+                    break;
+                }
+
+                case 6: {
+
+                    System.out.println("Estes são os Armazens Listados: ");
+                    for (int i = 0; i < Armazem.size(); i++) {
+                        System.out.println(" Coninome do Armazem: " + Armazem.get(i).getCodiname() + " | Numero de indentificação: " + Armazem.get(i).getIdNumberWareHause());
+
+                        System.out.print("Escolha o Armazem que deseja vizualizar: ");
+                        int choiseStorager = sc.nextInt();
+
+                        for (i = 0; i < Armazem.size(); i++) {
+                            System.out.println("Esses são os Produto dentro do armazem: ");
+                            if (i == choiseStorager) {
+                                System.out.println("O id do produto é: " + Armazem.get(i).getClonedIdnumber());
+                                System.out.println("Quantidade armazenada e: " + Armazem.get(i).getNameProduct() + "und(s)");
+                                System.out.println("O valor de custo desse produto: " + lista.get(i).getPriceCust());
+                                System.out.println("O valor de venda desse produto: " + lista.get(i).getPriceSell());
+                            }
+                        }
+                    }
+                    break;
+                }
+
+                case 7: {
+                    do {
+                        System.out.println("Estes são os Armazens Listados: ");
+                        for (int i = 0; i < Armazem.size(); i++) {
+                            System.out.println(" Coninome do Armazem: " + Armazem.get(i).getCodiname() + " | Numero de indentificação: " + Armazem.get(i).getIdNumberWareHause());
+
+                            System.out.print("Escolha o Armazem que deseja vizualizar: ");
+                            int choiseStorager = sc.nextInt();
+
+                            for (i = 0; i < Armazem.size(); i++) {
+                                System.out.println("Esses são os Produto dentro do armazem: ");
+                                if (i == choiseStorager) {
+                                    System.out.println("O id do produto é: " + Armazem.get(i).getClonedIdnumber());
+                                    System.out.println("Quantidade armazenada e: " + Armazem.get(i).getNameProduct() + "und(s)");
+                                    System.out.println("O valor de custo desse produto: " + lista.get(i).getPriceCust());
+                                    System.out.println("O valor de venda desse produto: " + lista.get(i).getPriceSell());
+                                }
+                            }
+                        }
+                        System.out.print("Deseja voltrar ao menu? Caso refazer tecle 1 : ");
+                        choiseSubMenu = sc.nextInt();
+                    } while (choiseSubMenu != 1);
+                    break;
+                }
+
+                case 8: {
+
+                    do {
+                        for (int i = 0; i < lista.size(); i++) {
+                            System.out.println("Esses são os menbros da lista: ");
+                            System.out.println(i + " - " + lista.get(i).getName());
+
+                            System.out.println("De qual menbro deseja alterar os preço?: ");
+                            int listchoise = sc.nextInt();
+                            for (i = 0; i < lista.size(); i++) {
+                                if (i == listchoise) {
+                                    System.out.println("Deseja aumentar o preço tecle 1, diminuir tecle 2: ");
+                                    int choises = sc.nextInt();
+                                    if (choises == 1) {
+                                        System.out.println("Novo preço de custo!: ");
+                                        double priceCust = sc.nextDouble();
+                                        lista.get(i).incraeseCust(priceCust);
+                                        System.out.println("Novo preço de venda!: ");
+                                        double priceSell = sc.nextDouble();
+                                        lista.get(i).incraeseSell(priceSell);
+                                    } else if (choises == 2) {
+                                        System.out.println("Novo preço de custo!: ");
+                                        double priceCust = sc.nextDouble();
+                                        lista.get(i).decraeseCust(priceCust);
+                                        System.out.println("Novo preço de venda!: ");
+                                        double priceSell = sc.nextDouble();
+                                        lista.get(i).decraeseSell(priceSell);
+                                    }
+
+                                }
+                            }
+                        }
+                        System.out.print("Deseja voltrar ao menu? Caso refazer tecle 1 : ");
+                        choiseSubMenu = sc.nextInt();
+                    } while (choiseSubMenu != 1);
+                    break;
+                }
+
+                case 9: {
+                    for (int i = 0; i < lista.size(); i++) {
+                        System.out.println("Esses são os menbros da lista: ");
+                        System.out.println(i + " - " + lista.get(i).getName());
+                        System.out.println("De qual menbro deseja alterar os preço?: ");
+                        int listchoise = sc.nextInt();
+                        for (i = 0; i < lista.size(); i++) {
+                            System.out.println("Deseja adicionar estoque a algum produto tecle 1, para remover tecle 2: ");
+                            int choises = sc.nextInt();
+                            if (choises == 1) {
+                                System.out.println("Quantidade a se adicionada: ");
+                                int increaseStock = sc.nextInt();
+                                lista.get(i).increaseStock(increaseStock);
+                            } else if (choises == 2) {
+                                System.out.println("Quantidade a se Removida: ");
+                                int decreaseStock = sc.nextInt();
+                                lista.get(i).decreaseStock(decreaseStock);
+                            }
+                        }
+                    }
+
+                }
+            }
+        } while (choise != 10);
+    }
+}
